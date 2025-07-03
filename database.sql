@@ -82,7 +82,7 @@ create table expenses (
 --     from expenses e
 --     where e.user_id = user_info.user_id
 -- );
--- add this logic in adding an expense logic
+-- logic in adding an expense logic
 
 
 
@@ -120,11 +120,6 @@ foreign key (requested_user_id) references users(id)
 
 
 
--- Food	Daily Food expenses
--- Vehicles	2/4-Wheelers
--- Transportation	daily transportation needs
--- Entertainment	Important One
--- Housing	Rent, maintainence
--- Insurance	EMI or RD
+
 
 
