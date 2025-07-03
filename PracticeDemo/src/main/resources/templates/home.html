@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+</head>
+<body>
+<h1> Welcome, <span th:text="${username}"> User</span>!</h1>
+
+    <div>
+        <li> <a th:href="@{/user/userProfile}">User Profile</a></li><br>
+        <li> <a th:href="@{/user/dashboard}">Dashboard</a></li><br>
+        <li> <a th:href="@{/user/expenses}">All Expenses</a></li><br>
+        <li> <a th:href="@{/user/addexpense}">Add Expense</a></li><br>
+        <li> <a th:href="@{user/editOrDelete}">Edit/Delete Expense</a></li><br>
+        <li> <a th:href="@{user/adminRequest}">Request Admin Access</a></li><br>
+<!--        <li> <a th:href="@{/user/editUserForm}">Edit User Profile</a></li><br>-->
+
+
+    </div>
+
+
+    <form action="#" th:action="@{/logout}" method="POST">
+
+        <input type="submit" value="Logout"/>
+    </form>
+
+
+</body>
+</html>

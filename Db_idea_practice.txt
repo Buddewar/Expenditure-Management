@@ -1,0 +1,87 @@
+Roles
+
+Purpose: Stores role types for user authorization (e.g., USER, ADMIN) to support role-based access control.
+Columns:
+- id: Long, Primary Key, Auto-increment
+- name: String, Unique, Not Null (e.g., "USER", "ADMIN")
+Relationships:
+- One-to-Many with Users: A role can be assigned to multiple users.
+
+Users
+Purpose: Stores user account information for authentication and linking to other financial records.
+Columns:
+- id: Long, Primary Key, Auto-increment
+- email: String, Unique, Not Null
+- password: String, Not Null (hashed, e.g., BCrypt)
+- role_id: Long, Foreign Key (references Roles.id), Not Null
+- created_at: Timestamp, Not Null
+Relationships:
+- Many-to-One with Roles
+- One-to-Many with Expenses
+- One-to-Many with Budgets
+- One-to-One with UserInformation
+
+UserInformation
+Purpose: Stores extended financial profile for each user.
+Columns:
+- id: Long, Primary Key, Auto-increment
+- user_id: Long, Foreign Key (references Users.id), Unique, Not Null
+- income: Double, Nullable
+- savings: Double, Nullable
+- financial_notes: String, Nullable
+- last_expense_date: DateTime, Nullable
+- created_at: Timestamp, Default current_timestamp
+- updated_at: Timestamp, Auto-updated on modification
+Relationships:
+- One-to-One with Users
+
+PaymentMethods
+Purpose: Normalizes and standardizes how expenses are paid.
+Columns:
+- id: Long, Primary Key, Auto-increment
+- name: String, Unique, Not Null (e.g., "CASH", "CARD")
+Relationships:
+- One-to-Many with Expenses
+
+Categories
+Purpose: Stores classification types for expenses and budgets.
+Columns:
+- id: Long, Primary Key, Auto-increment
+- name: String, Unique, Not Null
+- description: String, Nullable
+Relationships:
+- One-to-Many with Expenses
+- One-to-Many with Budgets
+
+Expenses
+Purpose: Captures spending activities with category, payment method, and recurrence support.
+Columns:
+- id: Long, Primary Key, Auto-increment
+- user_id: Long, Foreign Key (references Users.id)
+- description: String, Not Null
+- amount: Double, Not Null
+- expense_date: DateTime, Not Null
+- category_id: Long, Foreign Key (references Categories.id), Not Null
+- payment_method_id: Long, Foreign Key (references PaymentMethods.id), Not Null
+- created_at: Timestamp, Default current_timestamp
+Relationships:
+- Many-to-One with Users
+- Many-to-One with Categories
+- Many-to-One with PaymentMethods
+
+Budgets
+Purpose: Tracks planned vs. actual spending for users on a category-month basis.
+Columns:
+- id: Long, Primary Key, Auto-increment
+- user_id: Long, Foreign Key (references Users.id)
+- category_id: Long, Foreign Key (references Categories.id)
+- amount: Double, Not Null
+- spent_amount: Double, Not Null, Default 0.0
+- month: Date, Not Null
+- created_at: Timestamp, Default current_timestamp
+- updated_at: Timestamp, Auto-updated
+- notes: String, Nullable
+- status: Enum('ACTIVE', 'EXCEEDED', 'UNDER'), Default 'ACTIVE'
+Relationships:
+- Many-to-One with Users
+- Many-to-One with Categories

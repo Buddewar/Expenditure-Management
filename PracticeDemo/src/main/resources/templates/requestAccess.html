@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Request Admin Access</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h3 class="text-center">Request Admin Access</h3>
+
+    <form th:action="@{/user/processRequest}" method="Post" class="border p-4 rounded shadow-sm bg-light">
+        <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" name="message" class="form-control"  rows="4" placeholder="Why do you need Admin access?..." required></textarea>
+        </div>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success">Request Access</button>
+        </div>
+
+    </form>
+
+    <div th:if="${alert}" class="alert alert-warning text-center" role="alert">
+        <span th:text="${alert}">Fallback alert message</span>
+    </div>
+    <br>
+    <br>
+    <hr>
+    <div>
+    <span>
+        <a th:href="@{/user}">Back to Home Page</a>
+    </span>
+    </div>
+
+</div>
+
+</body>
+</html>

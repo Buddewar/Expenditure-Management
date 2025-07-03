@@ -1,0 +1,21 @@
+<table class="table table-bordered" xmlns:th="http://www.thymeleaf.org">
+  <thead>
+  <tr>
+    <th>Category</th>
+    <th>Monthly Limit</th>
+    <th>Spent</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="budget : ${budgets}">
+    <td th:text="${budget.category}">Food</td>
+    <td th:text="${budget.monthlyLimit}">10000</td>
+    <td th:text="${spentMap[budget.category]}">7500</td>
+    <td>
+      <span th:if="${spentMap[budget.category] <= budget.monthlyLimit}" class="badge bg-success">Within Budget</span>
+      <span th:if="${spentMap[budget.category] > budget.monthlyLimit}" class="badge bg-danger">Exceeded</span>
+    </td>
+  </tr>
+  </tbody>
+</table>

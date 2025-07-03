@@ -1,0 +1,363 @@
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html lang="en" xmlns:th="http://www.thymeleaf.org">&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta charset="UTF-8">&ndash;&gt;-->
+<!--&lt;!&ndash;    <title>Expense Dashboard</title>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta name="viewport" content="width=device-width, initial-scale=1">&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash; Chart.js CDN &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="container mt-5">&ndash;&gt;-->
+<!--&lt;!&ndash;    <h3 class="text-center">Category-wise Expense Chart</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div style="max-width: 600px; height: 450px; margin: auto;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <canvas id="categoryBarChart"></canvas>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<script th:inline="javascript">&ndash;&gt;-->
+<!--&lt;!&ndash;    const labels = /*[[${categoryLabels}]]*/ [];&ndash;&gt;-->
+<!--&lt;!&ndash;    const values = /*[[${categoryValues}]]*/ [];&ndash;&gt;-->
+
+<!--&lt;!&ndash;    const data = {&ndash;&gt;-->
+<!--&lt;!&ndash;        labels: labels,&ndash;&gt;-->
+<!--&lt;!&ndash;        datasets: [{&ndash;&gt;-->
+<!--&lt;!&ndash;            label: 'Expenses by Category',&ndash;&gt;-->
+<!--&lt;!&ndash;            data: values,&ndash;&gt;-->
+<!--&lt;!&ndash;            backgroundColor: '#42A5F5',&ndash;&gt;-->
+<!--&lt;!&ndash;            borderColor: '#1E88E5',&ndash;&gt;-->
+<!--&lt;!&ndash;            borderWidth: 1&ndash;&gt;-->
+<!--&lt;!&ndash;        }]&ndash;&gt;-->
+<!--&lt;!&ndash;    };&ndash;&gt;-->
+
+<!--&lt;!&ndash;    const config = {&ndash;&gt;-->
+<!--&lt;!&ndash;        type: 'bar',&ndash;&gt;-->
+<!--&lt;!&ndash;        data: data,&ndash;&gt;-->
+<!--&lt;!&ndash;        options: {&ndash;&gt;-->
+<!--&lt;!&ndash;            responsive: true,&ndash;&gt;-->
+<!--&lt;!&ndash;            maintainAspectRatio: false,&ndash;&gt;-->
+<!--&lt;!&ndash;            plugins: {&ndash;&gt;-->
+<!--&lt;!&ndash;                legend: {&ndash;&gt;-->
+<!--&lt;!&ndash;                    display: false&ndash;&gt;-->
+<!--&lt;!&ndash;                },&ndash;&gt;-->
+<!--&lt;!&ndash;                title: {&ndash;&gt;-->
+<!--&lt;!&ndash;                    display: true,&ndash;&gt;-->
+<!--&lt;!&ndash;                    text: 'Category-wise Expense Breakdown'&ndash;&gt;-->
+<!--&lt;!&ndash;                }&ndash;&gt;-->
+<!--&lt;!&ndash;            },&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            scales: {&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                y: {&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    beginAtZero: true,&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    title: {&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        display: true,&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        text: 'Amount Spent (₹)'&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    }&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                },&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                x: {&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    title: {&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        display: true,&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        text: 'Category'&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    }&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                }&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            }&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;    };&ndash;&gt;-->
+
+<!--&lt;!&ndash;    new Chart(document.getElementById('categoryBarChart'), config);&ndash;&gt;-->
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Expense Dashboard</title>-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    &lt;!&ndash; Chart.js CDN &ndash;&gt;-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+<!--    &lt;!&ndash; Bootstrap CDN &ndash;&gt;-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<div class="container mt-5">-->
+<!--    <h2 class="text-center mb-4">Expense Dashboard</h2>-->
+
+<!--    <div class="row justify-content-center">-->
+<!--        &lt;!&ndash; Category-wise Expense Bar Chart &ndash;&gt;-->
+<!--        <div class="col-md-6 mb-4">-->
+<!--            <div class="card">-->
+<!--                <div class="card-header bg-primary text-white text-center">-->
+<!--                    Category-wise Expenses-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                    <canvas id="categoryBarChart" style="height: 400px;"></canvas>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Payment Method Horizontal Bar Chart &ndash;&gt;-->
+<!--        <div class="col-md-6 mb-4">-->
+<!--            <div class="card">-->
+<!--                <div class="card-header bg-success text-white text-center">-->
+<!--                    Payment Method Usage-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                    <canvas id="paymentBarChart" style="height: 400px;"></canvas>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script th:inline="javascript">-->
+<!--    // Thymeleaf will inject these variables from your controller-->
+<!--    const categoryLabels = /*[[${categoryLabels}]]*/ [];-->
+<!--    const categoryValues = /*[[${categoryValues}]]*/ [];-->
+
+<!--    const paymentLabels = /*[[${paymentLabels}]]*/ [];-->
+<!--    const paymentValues = /*[[${paymentValues}]]*/ [];-->
+
+<!--    // Category Bar Chart Config-->
+<!--    const categoryData = {-->
+<!--        labels: categoryLabels,-->
+<!--        datasets: [{-->
+<!--            label: 'Expenses by Category',-->
+<!--            data: categoryValues,-->
+<!--            backgroundColor: '#42A5F5',-->
+<!--            borderColor: '#1E88E5',-->
+<!--            borderWidth: 1-->
+<!--        }]-->
+<!--    };-->
+
+<!--    const categoryConfig = {-->
+<!--        type: 'bar',-->
+<!--        data: categoryData,-->
+<!--        options: {-->
+<!--            responsive: true,-->
+<!--            maintainAspectRatio: false,-->
+<!--            plugins: {-->
+<!--                legend: { display: false },-->
+<!--                title: {-->
+<!--                    display: true,-->
+<!--                    text: 'Category-wise Expense Breakdown'-->
+<!--                }-->
+<!--            },-->
+<!--            scales: {-->
+<!--                y: { beginAtZero: true },-->
+<!--                x: {-->
+<!--                    ticks: { autoSkip: false },-->
+<!--                    title: {-->
+<!--                        display: true,-->
+<!--                        text: 'Category'-->
+<!--                    }-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
+<!--    };-->
+
+<!--    // Payment Horizontal Bar Chart Config-->
+<!--    const paymentData = {-->
+<!--        labels: paymentLabels,-->
+<!--        datasets: [{-->
+<!--            label: 'Payments by Method',-->
+<!--            data: paymentValues,-->
+<!--            backgroundColor: '#66BB6A',-->
+<!--            borderColor: '#388E3C',-->
+<!--            borderWidth: 1-->
+<!--        }]-->
+<!--    };-->
+
+<!--    const paymentConfig = {-->
+<!--        type: 'bar',-->
+<!--        data: paymentData,-->
+<!--        options: {-->
+<!--            indexAxis: 'y', // <- Horizontal chart-->
+<!--            responsive: true,-->
+<!--            maintainAspectRatio: false,-->
+<!--            plugins: {-->
+<!--                legend: { display: false },-->
+<!--                title: {-->
+<!--                    display: true,-->
+<!--                    text: 'Payment Method Usage'-->
+<!--                }-->
+<!--            },-->
+<!--            scales: {-->
+<!--                x: { beginAtZero: true }-->
+<!--            }-->
+<!--        }-->
+<!--    };-->
+
+<!--    new Chart(document.getElementById('categoryBarChart'), categoryConfig);-->
+<!--    new Chart(document.getElementById('paymentBarChart'), paymentConfig);-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Expense Dashboard</h2>
+    <div>
+    <span>
+        <a th:href="@{/user}">Back to Home Page</a>
+    </span>
+    </div>
+    <hr>
+    <div class="row justify-content-center">
+        <!-- Category-wise Bar Chart -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white text-center">
+                    Category-wise Expenses
+                </div>
+                <div class="card-body">
+                    <canvas id="categoryBarChart" style="height: 350px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Method Chart -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white text-center">
+                    Payment Method Usage
+                </div>
+                <div class="card-body">
+                    <canvas id="paymentBarChart" style="height: 350px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Monthly Trend Chart -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-warning text-dark text-center">
+                    Monthly Expense Trend
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyLineChart" style="height: 350px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    const categoryLabels = /*[[${categoryLabels}]]*/ [];
+    const categoryValues = /*[[${categoryValues}]]*/ [];
+
+    const paymentLabels = /*[[${paymentLabels}]]*/ [];
+    const paymentValues = /*[[${paymentValues}]]*/ [];
+
+    const monthLabels = /*[[${monthLabels}]]*/ []; // ["JANUARY", "FEBRUARY", ...]
+    const monthValues = /*[[${monthValues}]]*/ [];
+
+    // Category Bar Chart
+    const categoryConfig = {
+        type: 'bar',
+        data: {
+            labels: categoryLabels,
+            datasets: [{
+                label: 'Expenses by Category',
+                data: categoryValues,
+                backgroundColor: '#42A5F5',
+                borderColor: '#1E88E5',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Category-wise Expense Breakdown' }
+            },
+            scales: {
+                y: { beginAtZero: true },
+                x: { title: { display: true, text: 'Category' } }
+            }
+        }
+    };
+
+    // Payment Horizontal Bar Chart
+    const paymentConfig = {
+        type: 'bar',
+        data: {
+            labels: paymentLabels,
+            datasets: [{
+                label: 'Payment Type',
+                data: paymentValues,
+                backgroundColor: '#66BB6A',
+                borderColor: '#388E3C',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Payment Method Usage' }
+            },
+            scales: {
+                x: { beginAtZero: true },
+                y: { title: { display: true, text: 'Payment Type' } }
+            }
+        }
+    };
+
+    // Monthly Line Chart
+    const monthlyConfig = {
+        type: 'bar',
+        data: {
+            labels: monthLabels,
+            datasets: [{
+                label: 'Monthly Spending',
+                data: monthValues,
+                borderColor: '#FF7043',
+                backgroundColor: '#FFAB91',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Monthly Expense Trend' }
+            },
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: 'Amount (₹)' } },
+                x: { title: { display: true, text: 'Month' } }
+            }
+        }
+    };
+
+    new Chart(document.getElementById('categoryBarChart'), categoryConfig);
+    new Chart(document.getElementById('paymentBarChart'), paymentConfig);
+    new Chart(document.getElementById('monthlyLineChart'), monthlyConfig);
+</script>
+</body>
+</html>

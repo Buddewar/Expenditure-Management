@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+</head>
+<body>
+    <h1>Welcome, Admin!</h1>
+
+    <div>
+
+        <li> <a th:href="@{/admin/users}">List All Users</a></li><br>
+        <li> <a th:href="@{/admin/deleteUsers}">Delete Users</a></li><br>
+        <li> <a th:href="@{/admin/categories}">All Categories</a></li><br>
+        <li> <a th:href="@{/admin/addCategory}">Add Category</a></li><br>
+        <li> <a th:href="@{/admin/editOrDeleteCategory}">Edit/Delete Category</a></li><br>
+        <li> <a th:href="@{/admin/accessRequests}">Admin Access Requests</a></li><br>
+
+
+    </div>
+
+
+    <form action="#" th:action="@{/logout}" method="POST">
+
+        <input type="submit" value="Logout"/>
+    </form>
+</body>
+</html>
